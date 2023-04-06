@@ -1,24 +1,23 @@
-// Creo el servidor y el manejo de motor de plantillas
+require("dotenv").config();
+const app = require('./server');
+const port = app.get('port');
 
-const express = require("express");
-const app = express();
+app.listen(port, () => console.log("Listening on port " + port));
 
 app.set("view engine", "ejs");
 var access_token = "";
 
-app.get("/", (req, res) => {
-  res.render("pages/index", { client_id: clientID });
-});
-
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log("Escucho por el puerto " + port));
-
 // Importo la libreria de axios
 const axios = require("axios");
 
-// Clave Publica y Secreta (Pasar luego a variables de entorno)
-const clientID = "54c0494d4c7c7cafcfb5";
-const clientSecret = "7237cfaf348ea2d88008a6ad59f65df8e2503769";
+// Clave Publica y Secreta
+const clientID = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+
+// Ruta Inicial
+app.get("/", (req, res) => {
+  res.render("index", { client_id: clientID });
+});
 
 // Declaro la ruta del Callback
 app.get("/github/callback", (req, res) => {
@@ -38,6 +37,7 @@ app.get("/github/callback", (req, res) => {
   });
 });
 
+// Ruta luego de autenticar 
 app.get("/success", (req, res) => {
   axios({
     method: "get",
@@ -46,7 +46,7 @@ app.get("/success", (req, res) => {
       Authorization: "token " + access_token,
     },
   }).then((response) => {
-    res.render("pages/success", { userData: response.data });
+    res.render("success", { userData: response.data });
     console.log(response.data);
   });
 });
