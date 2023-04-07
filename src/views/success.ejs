@@ -7,15 +7,28 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     />
-    <!-- load bulma css -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <!-- load fontawesome -->
     <style>
       body {
         padding-top: 70px;
+      }
+
+      a {
+        text-decoration: none;
+        background-color: rgb(37, 90, 176);
+        color: white;
+        padding: .6em;
+        border-radius: 1em;
+        transition: .5s;
+      }
+
+      a:hover {
+        text-decoration: none;
+        color: white;
+        background-color: rgba(37, 90, 176, .7);
       }
     </style>
   </head>
@@ -27,13 +40,13 @@
         </h1>
         <div class="row">
           <div class="col-sm-6">
-            <div class="well">
+            <div>
               <p>
                 <strong>Name</strong>: <%= userData.name %><br />
                 <strong>Username</strong>: <%= userData.login %><br />
-                <strong>Company</strong>: <%= userData.company %><br />
-                <strong>Bio</strong>: <%= userData.bio %>
+                <strong>Bio</strong>: <%= userData.bio %><br />
               </p>
+              <a href="/users">Usuarios Registrados</a>
             </div>
           </div>
         </div>

@@ -1,0 +1,76 @@
+<!-- views/users.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Github OAuth</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      body {
+        padding-top: 70px;
+      }
+
+      aside {
+        display: flex;
+        justify-content: center;
+      }
+
+      img {
+        width: 50px;
+        margin: .5em;
+      }
+
+      .link {
+        position: absolute;
+        left: 10em;
+        top: 8.5em;
+        text-decoration: none;
+        background-color: rgb(37, 90, 176);
+        color: white;
+        padding: .6em;
+        border-radius: 1em;
+        transition: .5s;
+      }
+
+      .link:hover {
+        text-decoration: none;
+        color: white;
+        background-color: rgba(37, 90, 176, .7);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron text-center text-primary">
+        <div class="head">
+          <a href="/success" class="link">Volver</a>
+          <h1><span>Usuarios</span></h1>
+        </div>
+        <hr />
+        <div class="card">
+          <div class="card-body">
+            <ol>
+              <% userFinder.forEach(function(user) { %>
+                  <li>
+                      <span>Login: <strong><%= user.login %></strong><br></span>
+                      <span>Id: <strong><%= user.id %></strong><br></span>
+                      <span>URL: <a target="_blank" href=<%= user.html_url %>><strong><%= user.html_url %></strong><br></span></a>
+                      <aside>
+                        <img src=<%= user.avatar_url %> alt=<%= user.login %>>
+                      </aside>
+                      <hr>
+                  </li>
+              <% }); %>
+          </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
