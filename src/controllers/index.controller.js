@@ -4,7 +4,9 @@ const User = require("../models/users");
 
 // Otras Variables
 const indexCtrl = {};
-var access_token = "";
+let access_token = "";
+let username = "";
+var repo = [];
 
 // Variables de entorno
 const clientID = process.env.CLIENT_ID;
@@ -12,6 +14,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 
 // Logica de pagina inicial
 indexCtrl.renderIndex = (req, res) => {
+  access_token = "";
   res.render("index", { client_id: clientID });
 };
 
@@ -29,71 +32,83 @@ indexCtrl.renderCallback = (req, res) => {
   }).then((response) => {
     access_token = response.data.access_token;
     res.redirect("/success");
-    console.log(response.data);
   });
 };
 
 // Logica que muestra en caso de que la recoleccion de la data de Github sea exitosa
 indexCtrl.renderSuccess = (req, res) => {
-  axios({
-    method: "get",
-    url: `https://api.github.com/user`,
-    headers: {
-      Authorization: "token " + access_token,
-    },
-  }).then((response) => {
-    const { login, id, avatar_url, html_url, repos_url } = response.data;
-    const searcher = async () => {
-      const search = await User.find({ id: response.data.id });
+  if (access_token === "") {
+    res.send("Registrate para ver todos los usuarios registrados");
+  } else {
+    axios({
+      method: "get",
+      url: `https://api.github.com/user`,
+      headers: {
+        Authorization: "token " + access_token,
+      },
+    }).then((response) => {
+      const { login, id, avatar_url, html_url, repos_url } = response.data;
+      const searcher = async () => {
+        const search = await User.find({ id: response.data.id });
+        username = response.data.login;
 
-      if (search[0]?.id === undefined) {
-        const newUser = new User({
-          access_token,
-          login,
-          id,
-          avatar_url,
-          html_url,
-          repos_url,
-        });
-        newUser.save();
-        res.render("success", { userData: response.data });
-      } else {
-        res.render("success", { userData: response.data });
-      }
-    };
-    searcher();
-  });
+        if (search[0]?.id === undefined) {
+          const newUser = new User({
+            access_token,
+            login,
+            id,
+            avatar_url,
+            html_url,
+            repos_url,
+          });
+          newUser.save();
+          res.render("success", { userData: response.data });
+        } else {
+          res.render("success", { userData: response.data });
+        }
+      };
+      searcher();
+    });
+  }
 };
 
 // Logica que muestra todos los usuarios registrados
 indexCtrl.renderUsers = async (req, res) => {
-  const userFinder = await User.find();
-  res.render("users", { userFinder: userFinder });
+  if(access_token === ""){
+    res.render("not_found");
+  } else {
+    const userFinder = await User.find();
+    res.render("users", { userFinder: userFinder });
+  }
+};
+
+// Logica que busca y renderiza los repositorios
+indexCtrl.renderRepos = (req, res) => {
+  axios({
+    method: "get",
+    url: `https://api.github.com/users/${username}/repos`,
+    headers: {
+      Authorization: access_token,
+    },
+  }).then((response) => {
+    res.render("repos", { reposData: response.data });
+    console.log(response.data[0]);
+    response.data.forEach(function (el) {
+      repo.push(el.name);
+    });
+  });
 };
 
 // Logica para colocar estrella en un repositorio
 indexCtrl.renderStarRepo = (req, res) => {
   axios({
     method: "put",
-    url: `https://api.github.com/user/starred/nylander26/react-portfolio`,
+    url: `https://api.github.com/user/starred/${username}/react-portfolio`,
     headers: {
       Authorization: `Bearer ${access_token}`,
       accept: "application/vnd.github+json",
     },
-  });
+  }).then((response) => {});
 };
-
-indexCtrl.renderRepos = (req, res) => {
-    axios({
-        method: "get",
-        url: `https://api.github.com/users/Nylander26/repos`,
-        headers: {
-            Authorization: access_token
-        }
-    }).then((response) => {
-        res.render('repos', { reposData: response })
-        console.log(response.data);
-    })
-}
 
 module.exports = indexCtrl;

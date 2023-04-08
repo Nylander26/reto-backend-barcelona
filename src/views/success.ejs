@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Github OAuth</title>
+    <title>Github OAuth Perfil</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -15,38 +15,25 @@
       body {
         padding-top: 70px;
       }
-
-      a {
-        text-decoration: none;
-        background-color: rgb(37, 90, 176);
-        color: white;
-        padding: .6em;
-        border-radius: 1em;
-        transition: .5s;
-      }
-
-      a:hover {
-        text-decoration: none;
-        color: white;
-        background-color: rgba(37, 90, 176, .7);
-      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="jumbotron">
         <h1 class="text-primary text-center">
-          <span class="fa fa-github"></span> Github Information
+          <span class="fa fa-github"></span> Perfil Github
         </h1>
+        <a class="btn btn-danger" href="/">Cerrar Sesion</a>
+        <hr>
         <div class="row">
           <div class="col-sm-6">
             <div>
               <p>
-                <strong>Name</strong>: <%= userData.name %><br />
-                <strong>Username</strong>: <%= userData.login %><br />
-                <strong>Bio</strong>: <%= userData.bio %><br />
+                <strong>Nombre:</strong> <%= userData.name %><br />
+                <strong>Usuario:</strong> <%= userData.login %><br />
+                <strong>Bio:</strong> <%= userData.bio %><br />
               </p>
-              <a href="/users">Usuarios Registrados</a>
+              <a  class="btn btn-success" href="/repos">Repositorios</a>
             </div>
           </div>
         </div>

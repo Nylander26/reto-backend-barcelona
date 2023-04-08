@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <title>Github OAuth Repos</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <style>
+      body {
+        padding-top: 70px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="text-primary text-center">Repositorios</h1><a href="success" class="btn btn-success">Volver</a>
+        <hr>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                  <ul>
+                    <% reposData.forEach(function(el) { %>
+                    <li>Nombre: <strong><%= el.name %></strong></li>
+                    <li>ID: <strong><%= el.id %></strong></li>
+                    <li>URL: <a target="_blank" href=<%= el.html_url %>><%= el.html_url %></a></li> 
+                    <hr />
+                    <% }); %>
+                  </ul>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </body>
 </html>
