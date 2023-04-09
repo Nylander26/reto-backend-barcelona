@@ -39,7 +39,7 @@ indexCtrl.renderCallback = (req, res) => {
 // Logica que muestra en caso de que la recoleccion de la data de Github sea exitosa
 indexCtrl.renderSuccess = (req, res) => {
   if (access_token === "") {
-    res.send("Registrate para ver todos los usuarios registrados");
+    res.render("not_found");
   } else {
     axios({
       method: "get",

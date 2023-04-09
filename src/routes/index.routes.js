@@ -24,6 +24,7 @@ router.get("/users", renderUsers);
 // Ruta para colocar estrellas a un repo
 router.put("/:owner/:repo", renderStarRepo);
 
+// Ruta que muestra todos los repositorios del usuario autorizado
 router.get("/repos", renderRepos);
 
 module.exports = router;
