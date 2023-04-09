@@ -1,3 +1,5 @@
+[![CodeFactor](https://www.codefactor.io/repository/github/nylander26/reto-backend-barcelona/badge)](https://www.codefactor.io/repository/github/nylander26/reto-backend-barcelona)
+
 # Nombre del Proyecto.
 Reto Backend JOBarcelona.
 
