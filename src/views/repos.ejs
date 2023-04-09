@@ -21,20 +21,19 @@
       <div class="jumbotron">
         <h1 class="text-primary text-center">Repositorios</h1><a href="success" class="btn btn-success">Volver</a>
         <hr>
-          <div class="col-sm-6">
-            <div class="card">
-              <div class="card-body">
-                  <ul>
-                    <% reposData.forEach(function(el) { %>
+          <div class="card">
+            <div class="card-body">
+               <ul>
+                  <% reposData.forEach(function(el) { %>
                     <li>Nombre: <strong><%= el.name %></strong></li>
                     <li>ID: <strong><%= el.id %></strong></li>
-                    <li>URL: <a target="_blank" href=<%= el.html_url %>><%= el.html_url %></a></li> 
+                    <li>Link: <a class="btn btn-primary btn-sm" target="_blank" href=<%= el.html_url %>>Visita el Repositorio</a></li> 
                     <hr />
+                    <br>
                     <% }); %>
-                  </ul>
-              </div>
-            </div>
+               </ul>
           </div>
+        </div>
       </div>
     </div>
   </body>

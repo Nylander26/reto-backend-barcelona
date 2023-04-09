@@ -15,6 +15,7 @@ const clientSecret = process.env.CLIENT_SECRET;
 // Logica de pagina inicial
 indexCtrl.renderIndex = (req, res) => {
   access_token = "";
+  repo = [];
   res.render("index", { client_id: clientID });
 };
 
@@ -92,7 +93,6 @@ indexCtrl.renderRepos = (req, res) => {
     },
   }).then((response) => {
     res.render("repos", { reposData: response.data });
-    console.log(response.data[0]);
     response.data.forEach(function (el) {
       repo.push(el.name);
     });
@@ -103,12 +103,15 @@ indexCtrl.renderRepos = (req, res) => {
 indexCtrl.renderStarRepo = (req, res) => {
   axios({
     method: "put",
-    url: `https://api.github.com/user/starred/${username}/react-portfolio`,
+    url: `https://api.github.com/user/starred/${username}/${repo}`,
     headers: {
       Authorization: `Bearer ${access_token}`,
       accept: "application/vnd.github+json",
+      "Content-Length": "0",
     },
-  }).then((response) => {});
+  }).then((response) => {
+    res.send("Estrella añadida");
+  });
 };
 
 module.exports = indexCtrl;
