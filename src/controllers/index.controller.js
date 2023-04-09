@@ -39,7 +39,7 @@ indexCtrl.renderCallback = (req, res) => {
 // Logica que muestra en caso de que la recoleccion de la data de Github sea exitosa
 indexCtrl.renderSuccess = (req, res) => {
   if (access_token === "") {
-    res.render("not_found");
+    res.render("not_found_success");
   } else {
     axios({
       method: "get",
@@ -76,7 +76,7 @@ indexCtrl.renderSuccess = (req, res) => {
 // Logica que muestra todos los usuarios registrados
 indexCtrl.renderUsers = async (req, res) => {
   if(access_token === ""){
-    res.render("not_found");
+    res.render("not_found_users");
   } else {
     const userFinder = await User.find();
     res.render("users", { userFinder: userFinder });
@@ -85,18 +85,23 @@ indexCtrl.renderUsers = async (req, res) => {
 
 // Logica que busca y renderiza los repositorios
 indexCtrl.renderRepos = (req, res) => {
-  axios({
-    method: "get",
-    url: `https://api.github.com/users/${username}/repos`,
-    headers: {
-      Authorization: access_token,
-    },
-  }).then((response) => {
-    res.render("repos", { reposData: response.data });
-    response.data.forEach(function (el) {
-      repo.push(el.name);
+  if (access_token === ""){
+    res.render("not_found_success")
+  } else {
+    axios({
+      method: "get",
+      url: `https://api.github.com/users/${username}/repos`,
+      headers: {
+        Authorization: access_token,
+      },
+    }).then((response) => {
+      res.render("repos", { reposData: response.data });
+      response.data.forEach(function (el) {
+        repo.push(el.name);
+      });
+      console.log(access_token);
     });
-  });
+  }
 };
 
 // Logica para colocar estrella en un repositorio
