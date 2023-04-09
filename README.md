@@ -5,6 +5,13 @@ Reto Backend JOBarcelona.
 Creación de un servidor básico que implementa el sistema de social login de GitHub, almacena data del perfil en una base de datos (MongoDB) y la muestra la misma en un endpoint configurado para ello.
 
 # Uso e Instalación
+IMPORTANTE!!! Para obtener las credenciales de github como el clientID y el clientSECRET, deben registrar la app en `https://github.com/settings/applications/new`, solicitaran: 
+
+`Application Name`: Sera el nombre de la APP
+`Homepage URL`: El dominio principal de la APP (http://localhost:3000 [El puerto varia segun la configuracion de la APP])
+`Authorization Callback`: Este sera el URL en el cual Github enviara el codigo de autorizacion una vez la autorizacion haya finalizado (http://localhost:3000/github/callback)
+
+El formulario retornara dos claves, una publica y la otra secreta, ambas se copian y se pegan al codigo para autenticar al usuario.
 ```javascript
 # 'npm install'
 Instalara todas las dependencias necesarias del proyecto.
