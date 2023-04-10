@@ -33,6 +33,7 @@ indexCtrl.renderCallback = (req, res) => {
   }).then((response) => {
     access_token = response.data.access_token;
     res.redirect("/success");
+    console.log(access_token);
   });
 };
 
